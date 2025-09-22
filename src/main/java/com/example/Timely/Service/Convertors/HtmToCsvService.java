@@ -1,4 +1,4 @@
-package com.example.Timely.Service;
+package com.example.Timely.Service.Convertors;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;

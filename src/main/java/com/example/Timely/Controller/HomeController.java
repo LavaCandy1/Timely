@@ -4,8 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Timely.Service.HtmToCsvService;
-import com.example.Timely.Service.XlsToCsvService;
+import com.example.Timely.Service.Convertors.HtmToCsvService;
+import com.example.Timely.Service.Convertors.XlsToCsvService;
+
 
 @RestController
 @RequestMapping("/")
