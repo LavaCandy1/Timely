@@ -1,13 +1,13 @@
 package com.example.Timely.Service.Parsers;
 
-import com.example.Timely.Models.ClassSlot;
-import com.example.Timely.Repository.ClassSlotRepo;
-import com.example.Timely.Service.Parsers.TimetableParser;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import com.example.Timely.Models.ClassSlot;
+import com.example.Timely.Repository.ClassSlotRepo;
+import com.example.Timely.Service.Parsers.TimetableParser;
 
 import java.io.IOException;
 import java.nio.file.Files;
