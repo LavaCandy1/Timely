@@ -3,6 +3,7 @@ package com.example.Timely.Service.Security;
 import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.crypto.SecretKey;
@@ -10,6 +11,7 @@ import javax.crypto.SecretKey;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
 
@@ -22,10 +24,11 @@ public class JWTService {
     @Value("${app.jwt.expiration}")
     private long expiration;
 
-    public String generateToken(String email) {
+    public String generateToken(String email, String roles) {
         
 
         Map<String, Object> claims = new HashMap<>();
+        claims.put("roles", roles);
 
         return Jwts.builder()
                 .claims()
@@ -54,6 +57,15 @@ public class JWTService {
                     .getPayload()
                     .getSubject();
 
+    }
+    public List<String> extractRoles(String token) {
+
+        Claims claims = Jwts.parser()
+                            .verifyWith(getKey())
+                            .build()
+                            .parseSignedClaims(token)
+                            .getPayload();
+        return claims.get("roles", List.class);
     }
 
     public boolean validateToken(String token, String email) {

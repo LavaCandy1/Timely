@@ -35,20 +35,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-
         return http
-            .csrf(customizer -> customizer.disable())
-            .authorizeHttpRequests(requests -> requests
-                .requestMatchers("/h2-console/**", "/auth/**", "/v3/api-docs/**", "/swagger-ui/**","/").permitAll()
-                .anyRequest().authenticated()
-            )
-            .headers(headers -> headers.frameOptions().disable())
-            .cors(Customizer.withDefaults())
-            // .formLogin(Customizer.withDefaults())
-            // .httpBasic(Customizer.withDefaults())
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
-            .build();
+                .csrf(customizer -> customizer.disable())
+                .authorizeHttpRequests(requests -> requests
+                        .requestMatchers("/h2-console/**", "/auth/**", "/v3/api-docs/**", "/swagger-ui/**", "/")
+                        .permitAll()
+                        .anyRequest().authenticated())
+                .headers(headers -> headers.frameOptions().disable())
+                .cors(Customizer.withDefaults())
+                // .formLogin(Customizer.withDefaults())
+                // .httpBasic(Customizer.withDefaults())
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class)
+                .build();
     }
 
     @Bean
@@ -68,11 +67,10 @@ public class SecurityConfig {
 
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
-         return config.getAuthenticationManager();
+        return config.getAuthenticationManager();
 
     }
 
-    
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();

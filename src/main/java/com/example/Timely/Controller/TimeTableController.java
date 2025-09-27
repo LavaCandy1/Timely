@@ -3,7 +3,10 @@ package com.example.Timely.Controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,6 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Timely.Models.ClassSlot;
 import com.example.Timely.Repository.ClassSlotRepo;
 import com.example.Timely.Service.Parsers.TimetableService;
+
+import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/timetable")
@@ -30,7 +35,7 @@ public class TimeTableController {
 
     @GetMapping("/save")
     public String uploadTimetable() {
-        
+
         timetableService.processAndSaveAllHtmlTimetables();
         return "Timetable uploaded successfully!";
     }
@@ -44,10 +49,33 @@ public class TimeTableController {
 
     @GetMapping("/teacher/{teacher}")
     public ResponseEntity<List<ClassSlot>> getTimetableByTeacher(@PathVariable String teacher) {
-        
+
         List<ClassSlot> classSlots = classSlotRepo.findAllByInstructor(teacher);
         return ResponseEntity.ok(classSlots);
     }
 
-    
+    @GetMapping("/teacher")
+    public ResponseEntity<List<ClassSlot>> getMyTimetable(HttpServletRequest request) {
+        System.out.println("Here");
+        // Extract name/username from JWT
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        // String name = auth.getDetails().toString();
+
+        if (name == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        // Optionally check role
+        String role = (String) request.getAttribute("role");
+        System.out.println("Role: " + role);
+        // if (!"TEACHER".equals(role)) {
+        // return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        // }
+
+        List<ClassSlot> classSlots = classSlotRepo.findAllByInstructor(name);
+        return ResponseEntity.ok(classSlots);
+
+    }
+
 }
