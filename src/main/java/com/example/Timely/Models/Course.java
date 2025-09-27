@@ -16,6 +16,7 @@ public class Course {
 
     String courseName;
     String courseCode;
+    String courseType; // core, elective, lab, etc.
     // String teacherName; // will need to store a list here or create a separate entity for teachers and refernce it here
 
 
