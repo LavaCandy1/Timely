@@ -1,5 +1,8 @@
 package com.example.Timely.Controller;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -32,16 +35,24 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<String> loginUser(@RequestBody UserRequestDTO userRequestDTO) {
+    public ResponseEntity<Map<String, String>> loginUser(@RequestBody UserRequestDTO userRequestDTO) {
+
+        Map<String, String> response = new HashMap<>();
 
         try {
             String token = userService.verifyUser(userRequestDTO);
-            return ResponseEntity.ok(token);
+
+            response.put("token", token);
+            return ResponseEntity.ok(response);
 
         } catch (BadCredentialsException ex) {
-            return ResponseEntity.status(401).body(ex.getMessage());
+            System.out.println(ex.getMessage());
+            response.put("error", ex.getMessage());
+            return ResponseEntity.status(401).body(response);
+
         } catch (Exception e) {
-            return ResponseEntity.status(500).body("Authentication error: " + e.getMessage());
+            response.put("error", "Authentication error: " + e.getMessage());
+            return ResponseEntity.status(500).body(response);
         }
 
     }

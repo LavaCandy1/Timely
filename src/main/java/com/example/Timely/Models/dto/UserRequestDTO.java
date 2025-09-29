@@ -11,7 +11,6 @@ import jakarta.validation.constraints.Email;
 @ToString
 public class UserRequestDTO {
 
-    @NotBlank(message = "Username cannot be blank")
     private String name;
 
     @Email

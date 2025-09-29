@@ -38,7 +38,11 @@ public class SecurityConfig {
         return http
                 .csrf(customizer -> customizer.disable())
                 .authorizeHttpRequests(requests -> requests
-                        .requestMatchers("/h2-console/**", "/auth/**", "/v3/api-docs/**", "/swagger-ui/**", "/")
+                        .requestMatchers("/h2-console/**",
+                                "/auth/**",
+                                "/v3/api-docs/**",
+                                "/swagger-ui/**",
+                                "/")
                         .permitAll()
                         .anyRequest().authenticated())
                 .headers(headers -> headers.frameOptions().disable())
@@ -74,7 +78,7 @@ public class SecurityConfig {
     @Bean
     public CorsFilter corsFilter() {
         CorsConfiguration config = new CorsConfiguration();
-        config.setAllowedOrigins(List.of("*")); // allow all for now, restrict later
+        config.setAllowedOrigins(List.of("http://localhost:4200")); // allow all for now, restrict later
         config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE"));
         config.setAllowedHeaders(List.of("Authorization", "Content-Type"));
         config.setAllowCredentials(true);

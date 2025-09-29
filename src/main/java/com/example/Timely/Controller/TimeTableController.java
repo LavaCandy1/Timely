@@ -1,5 +1,6 @@
 package com.example.Timely.Controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Timely.Models.ClassSlot;
 import com.example.Timely.Repository.ClassSlotRepo;
-import com.example.Timely.Service.Parsers.TimetableService;
+import com.example.Timely.Service.Timetable;
+import com.example.Timely.Service.Parsers.TimetableSavingService;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -23,10 +25,13 @@ import jakarta.servlet.http.HttpServletRequest;
 public class TimeTableController {
 
     @Autowired
-    TimetableService timetableService;
+    TimetableSavingService timetableSavingService;
 
     @Autowired
     ClassSlotRepo classSlotRepo;
+
+    @Autowired
+    Timetable timetable;
 
     @GetMapping("/")
     public String getTimeTable() {
@@ -36,7 +41,7 @@ public class TimeTableController {
     @GetMapping("/save")
     public String uploadTimetable() {
 
-        timetableService.processAndSaveAllHtmlTimetables();
+        timetableSavingService.processAndSaveAllHtmlTimetables();
         return "Timetable uploaded successfully!";
     }
 
@@ -55,26 +60,41 @@ public class TimeTableController {
     }
 
     @GetMapping("/teacher")
-    public ResponseEntity<List<ClassSlot>> getMyTimetable(HttpServletRequest request) {
+    public ResponseEntity<List<ClassSlot>> getTeacherTimetable(HttpServletRequest request) {
         System.out.println("Here");
-        // Extract name/username from JWT
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        // String name = auth.getDetails().toString();
+        System.out.println(name);
 
         if (name == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        // Optionally check role
-        String role = (String) request.getAttribute("role");
-        System.out.println("Role: " + role);
+        List<ClassSlot> classSlots = classSlotRepo.findAllByInstructor(name);
+        return ResponseEntity.ok(classSlots);
+
+    }
+
+    @GetMapping("/student")
+    public ResponseEntity<List<ClassSlot>> getMyTimetable(HttpServletRequest request) {
+        System.out.println("Here");
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        String name = auth.getName();
+        System.out.println(name);
+
+        if (name == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
         // if (!"TEACHER".equals(role)) {
         // return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         // }
-
-        List<ClassSlot> classSlots = classSlotRepo.findAllByInstructor(name);
+        try {
+        List<ClassSlot> classSlots = timetable.getTimeTableForStudent(name);
         return ResponseEntity.ok(classSlots);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
 
     }
 
