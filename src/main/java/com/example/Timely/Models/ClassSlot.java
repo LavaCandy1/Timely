@@ -1,5 +1,6 @@
 package com.example.Timely.Models;
 
+import java.sql.Date;
 import java.sql.Time;
 
 import jakarta.persistence.Column;
@@ -52,6 +53,8 @@ public class ClassSlot {
     String group;
     String year;
     // String semester; //maybe in future if need to save old timetables too
+    @Column(name = "cancelled_date")
+    Date cancelledDate;
 
     //enum for slotType with display names for easy understanding
     public enum SlotType {

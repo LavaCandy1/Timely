@@ -1,7 +1,9 @@
 package com.example.Timely.Models.dto.timetableDTO;
 
+
 import java.sql.Date;
 import java.sql.Time;
+import java.util.List;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,14 +14,14 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @ToString
-public class teachertimetableDTO {
+public class cancelClassDTO {
 
+    List<String> batches;
+    Date cancelledDate;
     String courseCode;
-    Time startTime;
     String dayOfWeek;
     String location;
     String slotType;
-    String batches;
-    Date cancelledDate;
+    Time startTime;
     
 }

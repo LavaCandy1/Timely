@@ -1,6 +1,5 @@
 package com.example.Timely.Controller;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,18 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.example.Timely.Models.ClassSlot;
+import com.example.Timely.Models.dto.timetableDTO.cancelClassDTO;
 import com.example.Timely.Models.dto.timetableDTO.teachertimetableDTO;
 import com.example.Timely.Repository.ClassSlotRepo;
 import com.example.Timely.Service.TimetableService;
 import com.example.Timely.Service.Parsers.TimetableSavingService;
-
-import jakarta.servlet.http.HttpServletRequest;
 
 @RestController
 @RequestMapping("/timetable")
@@ -61,7 +56,7 @@ public class TimeTableController {
     }
 
     @GetMapping("/teacher")
-    public ResponseEntity<List<teachertimetableDTO>> getTeacherTimetable(HttpServletRequest request) {
+    public ResponseEntity<List<teachertimetableDTO>> getTeacherTimetable() {
         System.out.println("Here");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
@@ -71,15 +66,20 @@ public class TimeTableController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        // List<ClassSlot> classSlots = classSlotRepo.findAllByInstructor(name);
         List<teachertimetableDTO> classSlots = timetable.getTeacherTimetable(name);
-        System.out.println(classSlots);
         return ResponseEntity.ok(classSlots);
+    }
+
+    @PostMapping("/cancelClass")
+    public ResponseEntity<Void> cancelClass(@RequestBody cancelClassDTO classToCancel){
+        
+        timetable.cancelClass(classToCancel);
+        return ResponseEntity.ok().build();
 
     }
 
     @GetMapping("/student")
-    public ResponseEntity<List<ClassSlot>> getMyTimetable(HttpServletRequest request) {
+    public ResponseEntity<List<ClassSlot>> getMyTimetable() {
         System.out.println("Here");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
@@ -94,7 +94,6 @@ public class TimeTableController {
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-
     }
 
 }
