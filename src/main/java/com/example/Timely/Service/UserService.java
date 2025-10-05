@@ -45,6 +45,11 @@ public class UserService {
     }
 
     public UserResponseDTO createTeacher(UserRequestDTO userRequestDTO) {
+
+        if (userRepo.existsByEmail(userRequestDTO.getEmail())) {
+            throw new IllegalArgumentException("User with this email already exists");
+        }
+
         User user = new User();
         user.setName(userRequestDTO.getName());
         user.setEmail(userRequestDTO.getEmail());
