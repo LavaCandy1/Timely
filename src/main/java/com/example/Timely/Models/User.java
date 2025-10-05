@@ -1,5 +1,6 @@
 package com.example.Timely.Models;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -18,6 +19,8 @@ public class User {
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
     String name;
+
+    @Column(unique = true)
     String email;
     String password;
     
