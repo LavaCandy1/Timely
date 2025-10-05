@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Timely.Models.ClassSlot;
+import com.example.Timely.Models.dto.timetableDTO.teachertimetableDTO;
 import com.example.Timely.Repository.ClassSlotRepo;
-import com.example.Timely.Service.Timetable;
+import com.example.Timely.Service.TimetableService;
 import com.example.Timely.Service.Parsers.TimetableSavingService;
 
 import jakarta.servlet.http.HttpServletRequest;
@@ -31,7 +32,7 @@ public class TimeTableController {
     ClassSlotRepo classSlotRepo;
 
     @Autowired
-    Timetable timetable;
+    TimetableService timetable;
 
     @GetMapping("/")
     public String getTimeTable() {
@@ -60,7 +61,7 @@ public class TimeTableController {
     }
 
     @GetMapping("/teacher")
-    public ResponseEntity<List<ClassSlot>> getTeacherTimetable(HttpServletRequest request) {
+    public ResponseEntity<List<teachertimetableDTO>> getTeacherTimetable(HttpServletRequest request) {
         System.out.println("Here");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
@@ -70,7 +71,9 @@ public class TimeTableController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        List<ClassSlot> classSlots = classSlotRepo.findAllByInstructor(name);
+        // List<ClassSlot> classSlots = classSlotRepo.findAllByInstructor(name);
+        List<teachertimetableDTO> classSlots = timetable.getTeacherTimetable(name);
+        System.out.println(classSlots);
         return ResponseEntity.ok(classSlots);
 
     }
@@ -85,10 +88,6 @@ public class TimeTableController {
         if (name == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-
-        // if (!"TEACHER".equals(role)) {
-        // return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
-        // }
         try {
         List<ClassSlot> classSlots = timetable.getTimeTableForStudent(name);
         return ResponseEntity.ok(classSlots);
