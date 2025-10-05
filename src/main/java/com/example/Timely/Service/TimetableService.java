@@ -6,16 +6,17 @@ import org.springframework.stereotype.Service;
 
 import com.example.Timely.Models.ClassSlot;
 import com.example.Timely.Models.Student;
+import com.example.Timely.Models.dto.timetableDTO.teachertimetableDTO;
 import com.example.Timely.Repository.ClassSlotRepo;
 import com.example.Timely.Repository.StudentRepo;
 
 @Service
-public class Timetable {
+public class TimetableService {
 
     private final ClassSlotRepo classSlotRepo;
     private final StudentRepo studentRepo;
 
-    Timetable(ClassSlotRepo classSlotRepo, StudentRepo studentRepo) {
+    TimetableService(ClassSlotRepo classSlotRepo, StudentRepo studentRepo) {
         this.classSlotRepo = classSlotRepo;
         this.studentRepo = studentRepo;
     }
@@ -32,9 +33,21 @@ public class Timetable {
         return classSlots;
     }
 
-    public List<ClassSlot> getTimeTableForTeacher(String teacherName) {
+    public List<teachertimetableDTO> getTeacherTimetable(String teacherName){
 
-        return List.of();
+        return classSlotRepo.findTeacherTimetable(teacherName);
+            // .stream()
+            // .map(
+            //     slot -> {
+            //         teachertimetableDTO dto = new teachertimetableDTO();
+            //         dto.setCourseCode(slot.getCourseCode());
+            //         dto.setStartTime(slot.getStartTime());
+            //         dto.setDayOfWeek(slot.getDayOfWeek());
+            //         dto.setLocation(slot.getLocation());
+            //         dto.setBatches(slot.);
+            //     }
+            // )
+
     }
 
 }
