@@ -32,6 +32,10 @@ public class UserService {
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
 
     public UserResponseDTO createStudent(UserRequestDTO userRequestDTO) {
+        if (userRepo.existsByEmail(userRequestDTO.getEmail())) {
+            System.out.println("User with this email already exists");
+            throw new IllegalArgumentException("Student with this email already exists");
+        }
         User user = new User();
         user.setName(userRequestDTO.getName());
         user.setEmail(userRequestDTO.getEmail());
@@ -45,7 +49,7 @@ public class UserService {
     public UserResponseDTO createTeacher(UserRequestDTO userRequestDTO) {
 
         if (userRepo.existsByEmail(userRequestDTO.getEmail())) {
-            throw new IllegalArgumentException("User with this email already exists");
+            throw new IllegalArgumentException("Teacher with this email already exists");
         }
 
         User user = new User();
@@ -53,6 +57,20 @@ public class UserService {
         user.setEmail(userRequestDTO.getEmail());
         user.setPassword(passwordEncoder.encode((userRequestDTO.getPassword())));
         user.setRole(User.RoleEnum.TEACHER);
+        User savedUser = userRepo.save(user);
+
+        return new UserResponseDTO(savedUser);
+    }
+
+    public UserResponseDTO createAdmin(UserRequestDTO userRequestDTO) {
+        if (userRepo.existsByEmail(userRequestDTO.getEmail())) {
+            throw new IllegalArgumentException("Admin with this email already exists");
+        }
+        User user = new User();
+        user.setName(userRequestDTO.getName());
+        user.setEmail(userRequestDTO.getEmail());
+        user.setPassword(passwordEncoder.encode((userRequestDTO.getPassword())));
+        user.setRole(User.RoleEnum.ADMIN);
         User savedUser = userRepo.save(user);
 
         return new UserResponseDTO(savedUser);
