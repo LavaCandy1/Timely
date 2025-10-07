@@ -34,6 +34,12 @@ public class AuthController {
         return ResponseEntity.ok(createdUser);
     }
 
+    @PostMapping("/registerAdmin")
+    public ResponseEntity<UserResponseDTO> registerAdmin(@RequestBody UserRequestDTO userRequestDTO) {
+        UserResponseDTO createdUser = userService.createAdmin(userRequestDTO);
+        return ResponseEntity.ok(createdUser);
+    }
+
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> loginUser(@RequestBody UserRequestDTO userRequestDTO) {
 
