@@ -45,7 +45,7 @@ public class SecurityConfig {
                                 "/")
                         .permitAll()
                         .anyRequest().authenticated())
-                .headers(headers -> headers.frameOptions().disable())
+                .headers(headers -> headers.disable())
                 .cors(Customizer.withDefaults())
                 // .formLogin(Customizer.withDefaults())
                 // .httpBasic(Customizer.withDefaults())
@@ -62,10 +62,8 @@ public class SecurityConfig {
     @Bean
     public AuthenticationProvider authenticationProvider() {
         DaoAuthenticationProvider provider = new DaoAuthenticationProvider();
-
-        provider.setPasswordEncoder(passwordEncoder());
         provider.setUserDetailsService(myUserDetailsService);
-
+        provider.setPasswordEncoder(passwordEncoder());
         return provider;
     }
 
