@@ -75,7 +75,24 @@ public interface ClassSlotRepo extends JpaRepository<ClassSlot, Long> {
         @Param("startTime") Time startTime,
         @Param("location") String location
     );
-    
+
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query("DELETE FROM ClassSlot cs WHERE " +
+           "cs.batch IN :batches AND " +
+           "cs.courseCode = :courseCode AND " +
+           "cs.dayOfWeek = :dayOfWeek AND " +
+           "cs.startTime = :startTime AND " +
+           "cs.location = :location ")
+    int deleteClassSlots(
+        @Param("batches") List<String> batches,
+        @Param("courseCode") String courseCode,
+        @Param("dayOfWeek") String dayOfWeek,
+        @Param("startTime") Time startTime,
+        @Param("location") String location,
+        @Param("slotType") ClassSlot.SlotType slotType,
+        @Param("instructor") String instructor
+    );
 
 
 }

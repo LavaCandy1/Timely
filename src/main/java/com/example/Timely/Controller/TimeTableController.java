@@ -11,7 +11,9 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.Timely.Models.ClassSlot;
 import com.example.Timely.Models.dto.timetableDTO.AdminTimetableDTO;
+import com.example.Timely.Models.dto.timetableDTO.addClassDTO;
 import com.example.Timely.Models.dto.timetableDTO.cancelClassDTO;
+import com.example.Timely.Models.dto.timetableDTO.deleteClassDTO;
 import com.example.Timely.Models.dto.timetableDTO.teachertimetableDTO;
 import com.example.Timely.Repository.ClassSlotRepo;
 import com.example.Timely.Service.TimetableService;
@@ -120,5 +122,27 @@ public class TimeTableController {
 
         return ResponseEntity.ok(adminTimetableDTOs);
     }
+
+    @PostMapping("/admin/addClass")
+    public ResponseEntity<Void> addClass(@RequestBody addClassDTO newClass){
+
+        // add clash checking later
+        
+        timetable.addClass(newClass.toEntity());
+        // System.out.println(newClass);
+        return ResponseEntity.ok().build();
+
+    }
+
+    @PostMapping("/admin/deleteClass")
+    public ResponseEntity<Void> deleteClass(@RequestBody deleteClassDTO classToDelete){
+
+        // classSlotRepo.deleteById(id);
+        System.out.println(classToDelete);
+        timetable.deleteClass(classToDelete);
+        return ResponseEntity.ok().build();
+
+    }
+
 
 }

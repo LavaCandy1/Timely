@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.Timely.Models.ClassSlot;
 import com.example.Timely.Models.Student;
 import com.example.Timely.Models.dto.timetableDTO.cancelClassDTO;
+import com.example.Timely.Models.dto.timetableDTO.deleteClassDTO;
 import com.example.Timely.Models.dto.timetableDTO.teachertimetableDTO;
 import com.example.Timely.Repository.ClassSlotRepo;
 import com.example.Timely.Repository.StudentRepo;
@@ -67,8 +68,31 @@ public class TimetableService {
         );
 
         System.out.println("Number of class slots updated: " + updatedCount);
+ 
+    }
 
+    public void addClass(ClassSlot newClass) {
+        if (newClass == null) {
+            throw new IllegalArgumentException("ClassSlot cannot be null");
+        }
+        classSlotRepo.save(newClass);
+    }
+
+    public void deleteClass(deleteClassDTO classToDelete) {
+
+        System.out.println(classToDelete);
         
+        int deletedCount = classSlotRepo.deleteClassSlots(
+            classToDelete.getBatches(),
+            classToDelete.getCourseCode(),
+            classToDelete.getDayOfWeek(),
+            classToDelete.getStartTime(),
+            classToDelete.getLocation(),
+            classToDelete.getSlotType(),
+            classToDelete.getInstructor()
+        );
+
+        System.out.println("Number of class slots deleted: " + deletedCount);
     }
 
 }
