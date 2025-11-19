@@ -35,4 +35,15 @@ public class AdminTimetableDTO {
         this.batches = classSlot.getBatch();
         this.cancelledDate = classSlot.getCancelledDate();
     }
+
+    public AdminTimetableDTO(String courseCode, Time startTime, String dayOfWeek, String location, String slotType,
+            String batches, Date cancelledDate) {
+        this.courseCode = courseCode;
+        this.startTime = startTime;
+        this.dayOfWeek = dayOfWeek;
+        this.location = location;
+        this.slotType = slotType;
+        this.batches = batches;
+        this.cancelledDate = cancelledDate;
+    }
 }

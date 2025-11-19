@@ -103,10 +103,7 @@ public class TimeTableController {
     public ResponseEntity<List<AdminTimetableDTO>> getTeacherTimetableForAdmin(@PathVariable String teacher) {
         System.out.println("Here");
         System.out.println(teacher);
-        List<ClassSlot> classSlots = classSlotRepo.findAllByInstructor(teacher);
-        List<AdminTimetableDTO> adminTimetableDTOs = classSlots.stream()
-            .map(AdminTimetableDTO::new)
-            .toList();
+        List<AdminTimetableDTO> adminTimetableDTOs = classSlotRepo.findTeacherTimetableForAdmin(teacher);
         
         return ResponseEntity.ok(adminTimetableDTOs);
     }
