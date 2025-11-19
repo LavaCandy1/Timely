@@ -1,0 +1,38 @@
+package com.example.Timely.Models.dto.timetableDTO;
+
+import java.sql.Date;
+import java.sql.Time;
+
+import com.example.Timely.Models.ClassSlot;
+
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
+@Getter
+@Setter
+@AllArgsConstructor
+@ToString
+public class AdminTimetableDTO {
+
+    String courseCode;
+    Time startTime;
+    String dayOfWeek;
+    String location;
+    String slotType;
+    String instructor;
+    String batches;
+    Date cancelledDate;
+
+    public AdminTimetableDTO(ClassSlot classSlot) {
+        this.courseCode = classSlot.getCourseCode();
+        this.startTime = classSlot.getStartTime();
+        this.dayOfWeek = classSlot.getDayOfWeek();
+        this.location = classSlot.getLocation();
+        this.slotType = classSlot.getSlotType().toString();
+        this.instructor = classSlot.getInstructor();
+        this.batches = classSlot.getBatch();
+        this.cancelledDate = classSlot.getCancelledDate();
+    }
+}
