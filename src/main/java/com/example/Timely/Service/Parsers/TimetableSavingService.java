@@ -52,9 +52,9 @@ public class TimetableSavingService {
     }
 
     private void processSingleFile(Path filePath) {
-        logger.info("===========================================================");
-        logger.info("▶️ Processing file: {}", filePath.getFileName());
-        logger.info("===========================================================");
+        // logger.info("===========================================================");
+        logger.info("Processing file: {}", filePath.getFileName());
+        // logger.info("===========================================================");
         try {
             String htmlData = Files.readString(filePath);
             List<ClassSlot> slots = timetableParser.parseHtml(htmlData);
@@ -64,8 +64,8 @@ public class TimetableSavingService {
                         filePath.getFileName());
             } else {
                 classSlotRepo.saveAll(slots);
-                logger.info("✅ Successfully parsed and saved {} class slots from {}.", slots.size(),
-                        filePath.getFileName());
+                // logger.info("Successfully parsed and saved {} class slots from {}.", slots.size(),
+                        // filePath.getFileName());
             }
         } catch (IOException e) {
             logger.error("An error occurred while reading the file {}: {}", filePath.getFileName(), e.getMessage(), e);
