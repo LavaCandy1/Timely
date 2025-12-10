@@ -2,7 +2,7 @@
 
 Timely is a robust Spring Boot backend application designed to manage, parse, and serve university timetables. It provides role-based access for Students, Teachers, and Administrators, allowing for personalized schedule views, automated timetable parsing from HTML/CSV files, and dynamic class management.
 
-## 🚀 Features
+## Features
 
 * **Role-Based Authentication:** Secure login and registration for Students, Teachers, and Admins using JWT (JSON Web Tokens).
 * **Automated Parsing:** Includes a sophisticated parser (`TimetableParser`) that reads raw HTML and CSV timetable files and converts them into structured database entities.
@@ -16,7 +16,7 @@ Timely is a robust Spring Boot backend application designed to manage, parse, an
 * **Class Cancellations:** Functionality to mark specific classes as cancelled.
 * **Database Optimization:** Uses PostgreSQL-specific features (like `jsonb` and `string_agg`) for efficient data storage and retrieval.
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 * **Language:** Java 17+
 * **Framework:** Spring Boot 3.x
@@ -28,7 +28,7 @@ Timely is a robust Spring Boot backend application designed to manage, parse, an
     * **Jsoup:** HTML parsing for timetable files.
     * **Maven:** Dependency management.
 
-## 📂 Project Structure
+## Project Structure
 
 ```text
 src/main/java/com/example/Timely
@@ -43,7 +43,7 @@ src/main/java/com/example/Timely
 └── TimelyApplication.java
 ```
 
-## ⚙️ Configuration & Setup
+## Configuration & Setup
 
 ### 1. Prerequisites
 * Java Development Kit (JDK) 17 or higher.
@@ -104,7 +104,7 @@ mvn spring-boot:run
 ### Users (`/users`)
 * `GET /users`: Get a list of all users.
 
-## 📝 Parsing Logic
+## Parsing Logic
 The `TimetableParser` is configured to extract metadata from HTML headers, including:
 * Session (e.g., 2024-25)
 * Semester (Even/Odd)
@@ -113,12 +113,12 @@ The `TimetableParser` is configured to extract metadata from HTML headers, inclu
 
 Ensure your HTML files follow the structure expected by the Jsoup selectors in `TimetableParser.java` for successful data extraction.
 
-## 🤝 Contributing
+## Contributing
 1. Fork the repository.
 2. Create a feature branch (`git checkout -b feature/NewFeature`).
 3. Commit your changes.
 4. Push to the branch.
 5. Open a Pull Request.
 
-## 📄 License
+## License
 [MIT](https://choosealicense.com/licenses/mit/)
