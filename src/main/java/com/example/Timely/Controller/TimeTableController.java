@@ -63,7 +63,7 @@ public class TimeTableController {
         System.out.println("Here");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        System.out.println(name);
+        // System.out.println(name);
 
         if (name == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -127,6 +127,7 @@ public class TimeTableController {
     public ResponseEntity<Void> addClass(@RequestBody addClassDTO newClass){
 
         // add clash checking later
+        // check for empty of invalid / null entires (must)
         
         timetable.addClass(newClass.toEntity());
         // System.out.println(newClass);
