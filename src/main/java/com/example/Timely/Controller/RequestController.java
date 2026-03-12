@@ -10,15 +10,15 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.Timely.Models.RescheduleRequest;
 
 @RestController
-@RequestMapping("/api/requests")
+@RequestMapping("/requests")
 public class RequestController {
     
     @PostMapping("/reschedule")
-    public ResponseEntity<String> createRescheduleRequest(@RequestBody RescheduleRequest incomingRequestData) {
+    public ResponseEntity<Void> createRescheduleRequest(@RequestBody RescheduleRequest incomingRequestData) {
         // Logic to create a reschedule request
         System.out.println("Creating a reschedule request...");
         System.out.println(incomingRequestData);
-        return ResponseEntity.ok("Reschedule request created successfully");
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping("/rescheduleRequests")
