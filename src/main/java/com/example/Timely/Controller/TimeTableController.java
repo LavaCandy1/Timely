@@ -60,7 +60,7 @@ public class TimeTableController {
 
     @GetMapping("/teacher")
     public ResponseEntity<List<teachertimetableDTO>> getTeacherTimetable() {
-        System.out.println("Here");
+        System.out.println("Teacher timetable endpoint hit");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
         // System.out.println(name);

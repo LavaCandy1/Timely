@@ -9,27 +9,27 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.Timely.Models.RescheduleRequest;
+import com.example.Timely.Models.ExtraClassRequest;
 
 @RestController
 @RequestMapping("/requests")
 public class RequestController {
     
-    @PostMapping("/reschedule")
-    public ResponseEntity<Void> createRescheduleRequest(@RequestBody RescheduleRequest incomingRequestData) {
-        // Logic to create a reschedule request
+    @PostMapping("/extraClassSubmit")
+    public ResponseEntity<Void> createExtraClassRequest(@RequestBody ExtraClassRequest incomingRequestData) {
+        // Logic to create a extraClassSubmit request
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-        System.out.println("Creating a reschedule request...");
+        System.out.println("Creating a extraClassSubmit request...");
         incomingRequestData.setInstructor(auth.getName());
         System.out.println(incomingRequestData);
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/rescheduleRequests")
-    public String getAllRescheduleRequests() {
-        // Logic to retrieve reschedule requests
-        System.out.println("Retrieving all reschedule requests...");
-        return "List of reschedule requests";
+    @GetMapping("/extraClassSubmitRequests")
+    public String getAllExtraClassRequests() {
+        // Logic to retrieve extraClassSubmit requests
+        System.out.println("Retrieving all extraClassSubmit requests...");
+        return "List of extraClassSubmit requests";
     }
 
 

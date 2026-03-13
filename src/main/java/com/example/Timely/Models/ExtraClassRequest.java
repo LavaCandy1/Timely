@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 @Entity
-public class RescheduleRequest {
+public class ExtraClassRequest {
     
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
