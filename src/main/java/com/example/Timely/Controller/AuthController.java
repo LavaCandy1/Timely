@@ -52,7 +52,6 @@ public class AuthController {
             return ResponseEntity.ok(response);
 
         } catch (BadCredentialsException ex) {
-            System.out.println(ex.getMessage());
             response.put("error", ex.getMessage());
             return ResponseEntity.status(401).body(response);
 

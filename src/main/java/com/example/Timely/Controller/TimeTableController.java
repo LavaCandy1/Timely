@@ -60,10 +60,8 @@ public class TimeTableController {
 
     @GetMapping("/teacher")
     public ResponseEntity<List<teachertimetableDTO>> getTeacherTimetable() {
-        System.out.println("Teacher timetable endpoint hit");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        // System.out.println(name);
 
         if (name == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -83,10 +81,8 @@ public class TimeTableController {
 
     @GetMapping("/student")
     public ResponseEntity<List<ClassSlot>> getMyTimetable() {
-        System.out.println("Here");
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
-        System.out.println(name);
 
         if (name == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -103,8 +99,6 @@ public class TimeTableController {
 
     @GetMapping("/admin/teacher/{teacher}")
     public ResponseEntity<List<AdminTimetableDTO>> getTeacherTimetableForAdmin(@PathVariable String teacher) {
-        System.out.println("Here");
-        System.out.println(teacher);
         List<AdminTimetableDTO> adminTimetableDTOs = classSlotRepo.findTeacherTimetableForAdmin(teacher);
         
         return ResponseEntity.ok(adminTimetableDTOs);
@@ -112,9 +106,7 @@ public class TimeTableController {
 
     @GetMapping("/admin/batch/{year}/{batch}")
     public ResponseEntity<List<AdminTimetableDTO>> getBatchTimetableForAdmin(@PathVariable String year, @PathVariable String batch) {
-        System.out.println("Here");
         batch = batch.toUpperCase();
-        System.out.println(year);
         List<ClassSlot> classSlots = classSlotRepo.findAllByBatch(batch);
         List<AdminTimetableDTO> adminTimetableDTOs = classSlots.stream()
             .map(AdminTimetableDTO::new)
@@ -130,7 +122,6 @@ public class TimeTableController {
         // check for empty of invalid / null entires (must)
         
         timetable.addClass(newClass.toEntity());
-        // System.out.println(newClass);
         return ResponseEntity.ok().build();
 
     }
@@ -138,8 +129,6 @@ public class TimeTableController {
     @PostMapping("/admin/deleteClass")
     public ResponseEntity<Void> deleteClass(@RequestBody deleteClassDTO classToDelete){
 
-        // classSlotRepo.deleteById(id);
-        System.out.println(classToDelete);
         timetable.deleteClass(classToDelete);
         return ResponseEntity.ok().build();
 
