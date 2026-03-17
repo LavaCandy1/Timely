@@ -1,5 +1,7 @@
 package com.example.Timely.Models;
 
+import java.sql.Date;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -27,6 +29,8 @@ public class ExtraClassRequest {
 
     private String status; // e.g., "Pending", "Approved", "Rejected"
     private String reason; // Reason for request
+
+    private Date createdAt;
     
 
 
