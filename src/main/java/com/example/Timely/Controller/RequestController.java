@@ -1,5 +1,7 @@
 package com.example.Timely.Controller;
 
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -10,10 +12,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Timely.Models.ExtraClassRequest;
+import com.example.Timely.Service.RequestService;
+
+import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/requests")
+@RequiredArgsConstructor
 public class RequestController {
+
+    private final RequestService requestService;
+    
+    // public RequestController(RequestService requestService){
+    //     this.requestService = requestService;;
+    // }
     
     @PostMapping("/extraClassSubmit")
     public ResponseEntity<Void> createExtraClassRequest(@RequestBody ExtraClassRequest incomingRequestData) {
@@ -25,11 +37,12 @@ public class RequestController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/extraClassSubmitRequests")
-    public String getAllExtraClassRequests() {
-        // Logic to retrieve extraClassSubmit requests
+    @GetMapping("/extraClassRequests")
+    public ResponseEntity<List<ExtraClassRequest>> getAllExtraClassRequests() {
+        
+        List<ExtraClassRequest> requests = requestService.getAllExtraClassRequests();
         System.out.println("Retrieving all extraClassSubmit requests...");
-        return "List of extraClassSubmit requests";
+        return ResponseEntity.ok(requests);
     }
 
 
