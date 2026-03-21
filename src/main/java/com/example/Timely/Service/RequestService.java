@@ -38,8 +38,29 @@ public class RequestService {
         return req;
     }
 
+    public void submitExtraClassRequest(ExtraClassRequest request) {
+        request.setId((long) (dummyExtraClassRequests.size() + 1));
+        request.setStatus("Pending"); // Simulate auto-generated ID
+        request.setCreatedAt(new Date(System.currentTimeMillis()));
+        dummyExtraClassRequests.add(request);
+    }
+
     public List<ExtraClassRequest> getAllExtraClassRequests() {
         System.out.println("Retrieving " + dummyExtraClassRequests.size() + " dummy requests...");
         return dummyExtraClassRequests;
+    }
+
+    public void rejectExtraClassRequest(Long id) {
+        dummyExtraClassRequests.stream()
+            .filter(req -> req.getId().equals(id))
+            .findFirst()
+            .ifPresent(req -> req.setStatus("REJECTED"));
+    }
+
+    public void approveExtraClassRequest(Long id) {
+        dummyExtraClassRequests.stream()
+            .filter(req -> req.getId().equals(id))
+            .findFirst()
+            .ifPresent(req -> req.setStatus("APPROVED"));
     }
 }

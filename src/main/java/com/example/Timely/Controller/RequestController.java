@@ -8,6 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,14 +35,14 @@ public class RequestController {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("Creating a extraClassSubmit request...");
         incomingRequestData.setInstructor(auth.getName());
-        System.out.println(incomingRequestData);
+        // System.out.println(incomingRequestData);
+        requestService.submitExtraClassRequest(incomingRequestData);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping("/extraClassRequests/{type}")
     public ResponseEntity<List<ExtraClassRequest>> getAllExtraClassRequests(@PathVariable String type) {
         
-        System.out.println(type);
         if (type.equalsIgnoreCase("Extra Class")){
             System.out.println("Retrieving all extraClassSubmit requests...");
 
@@ -53,6 +54,20 @@ public class RequestController {
         }
     }
 
+
+    @PutMapping("/extraClassRequests/{id}/approve")
+    public ResponseEntity<Void> approveExtraClassRequest(@PathVariable Long id) {
+        
+        requestService.approveExtraClassRequest(id);
+        return ResponseEntity.ok().build();
+    }
+
+    @PutMapping("/extraClassRequests/{id}/reject")
+    public ResponseEntity<Void> rejectExtraClassRequest(@PathVariable Long id) {
+        
+        requestService.rejectExtraClassRequest(id);
+        return ResponseEntity.ok().build();
+    }
 
 
 }
