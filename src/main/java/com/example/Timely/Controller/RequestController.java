@@ -20,7 +20,7 @@ import lombok.RequiredArgsConstructor;
 
 @RestController
 @RequestMapping("/requests")
-@RequiredArgsConstructor
+@RequiredArgsConstructor // for constructor injection of final fields
 public class RequestController {
 
     private final RequestService requestService;
