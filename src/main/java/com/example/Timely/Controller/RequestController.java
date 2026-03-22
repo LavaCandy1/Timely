@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Timely.Models.ExtraClassRequest;
+import com.example.Timely.Models.Locations;
 import com.example.Timely.Service.RequestService;
 
 import lombok.RequiredArgsConstructor;
@@ -31,11 +32,9 @@ public class RequestController {
     
     @PostMapping("/extraClassSubmit")
     public ResponseEntity<Void> createExtraClassRequest(@RequestBody ExtraClassRequest incomingRequestData) {
-        // Logic to create a extraClassSubmit request
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         System.out.println("Creating a extraClassSubmit request...");
         incomingRequestData.setInstructor(auth.getName());
-        // System.out.println(incomingRequestData);
         requestService.submitExtraClassRequest(incomingRequestData);
         return ResponseEntity.ok().build();
     }
@@ -69,5 +68,11 @@ public class RequestController {
         return ResponseEntity.ok().build();
     }
 
+    @GetMapping("/extraClassRequests/{id}/availableLocations")
+    public ResponseEntity<List<Locations>> getAvailableLocations(@PathVariable Long id) {
+        
+        List<Locations> available = requestService.getAvailableLocations(id);
+        return ResponseEntity.ok(available); 
+    }
 
 }
