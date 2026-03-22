@@ -57,7 +57,7 @@ public class RequestController {
 
     @PostMapping("/extraClassRequests/{id}/approve")
     public ResponseEntity<Void> approveExtraClassRequest(@PathVariable Long id, @RequestParam String location) {
-        
+        System.out.println("Approving extra class request with ID: " + id + " and location: " + location);
         requestService.approveExtraClassRequest(id,location);
         return ResponseEntity.ok().build();
     }
