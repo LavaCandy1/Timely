@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.Timely.Models.ExtraClassRequest;
@@ -54,10 +55,10 @@ public class RequestController {
     }
 
 
-    @PutMapping("/extraClassRequests/{id}/approve")
-    public ResponseEntity<Void> approveExtraClassRequest(@PathVariable Long id) {
+    @PostMapping("/extraClassRequests/{id}/approve")
+    public ResponseEntity<Void> approveExtraClassRequest(@PathVariable Long id, @RequestParam String location) {
         
-        requestService.approveExtraClassRequest(id);
+        requestService.approveExtraClassRequest(id,location);
         return ResponseEntity.ok().build();
     }
 

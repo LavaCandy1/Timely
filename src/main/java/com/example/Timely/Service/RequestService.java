@@ -43,13 +43,14 @@ public class RequestService {
         }
     }
 
-    public void approveExtraClassRequest(Long id) {
+    public void approveExtraClassRequest(Long id, String location) {
         if (id == null) {
             return;
         }
         if (extraClassRepo.existsById(id)) {
             extraClassRepo.findById(id).ifPresent(request -> {
                 request.setStatus("APPROVED");
+                request.setLocation(location);
                 extraClassRepo.save(request);
             });
         }
@@ -64,10 +65,9 @@ public class RequestService {
             return null;
         }
         String day = request.getDayOfWeek();
-        String startTime = request.getStartTime();
-        LocalTime localTime = LocalTime.parse(startTime);
+        LocalTime startTime = LocalTime.parse(request.getStartTime());
 
-        List<Locations> availableLocations = locationRepo.findAvailableLocations(day, localTime);
+        List<Locations> availableLocations = locationRepo.findAvailableLocations(day, startTime);
 
         return availableLocations;
 
