@@ -24,6 +24,7 @@ public class RequestService {
     private final ExtraClassRequestRepo extraClassReqRepo;
     private final LocationRepo locationRepo;
     private final ClassSlotRepo classSlotRepo;
+    private final EmailService emailService;
     
 
     public void submitExtraClassRequest(ExtraClassRequest request) {
@@ -54,27 +55,33 @@ public class RequestService {
         if (id == null) {
             return;
         }
-        System.out.println("Inside service");
-        extraClassReqRepo.findById(id).ifPresent(request -> {
-            request.setStatus("APPROVED");
-            request.setLocation(location);
-            extraClassReqRepo.save(request);
+        System.out.println("Inside service for approval");
+        // extraClassReqRepo.findById(id).ifPresent(request -> {
+        //     request.setStatus("APPROVED");
+        //     request.setLocation(location);
+        //     extraClassReqRepo.save(request);
 
 
-            ClassSlot newSlot = new ClassSlot();
-            newSlot.setCourseCode(request.getCourseCode());
-            newSlot.setDayOfWeek(request.getDayOfWeek());
-            newSlot.setStartTime(Time.valueOf(request.getStartTime() + ":00"));
-            newSlot.setLocation(location);
-            newSlot.setInstructor(request.getInstructor());
-            newSlot.setSlotType(ClassSlot.SlotType.valueOf(request.getSlotType().name())); // ughh... dunno if this will work or not
-            newSlot.setBatch(request.getBatch());
-            newSlot.setGroup(request.getGroup());
-            newSlot.setYear(request.getYear());
-            System.out.println("before saving new class slot: " + newSlot);
-            classSlotRepo.save(newSlot);
-            System.out.println("After saving");
-        });
+        //     ClassSlot newSlot = new ClassSlot();
+        //     newSlot.setCourseCode(request.getCourseCode());
+        //     newSlot.setDayOfWeek(request.getDayOfWeek());
+        //     newSlot.setStartTime(Time.valueOf(request.getStartTime() + ":00"));
+        //     newSlot.setLocation(location);
+        //     newSlot.setInstructor(request.getInstructor());
+        //     newSlot.setSlotType(ClassSlot.SlotType.valueOf(request.getSlotType().name())); // ughh... dunno if this will work or not
+        //     newSlot.setBatch(request.getBatch());
+        //     newSlot.setGroup(request.getGroup());
+        //     newSlot.setYear(request.getYear());
+            
+            // classSlotRepo.save(newSlot);
+        // });
+
+        // String instructorEmail = extraClassReqRepo.findById(id).map(ExtraClassRequest::getInstructor).orElse(null);
+        String dummyToEmail = "E22CSEU1201@bennett.edu.in"; // Replace with actual email retrieval logic
+        String emailSubject = "Your Extra Class Request has been Approved";
+        String emailBody = "Dear Instructor,\n\nYour request for an extra class has been approved. The class will be held at " + location + ".\n\nBest regards,\nTimely Team";
+
+        emailService.sendEmail(dummyToEmail, emailSubject, emailBody);
     }
 
     public List<Locations> getAvailableLocations(Long id) {
