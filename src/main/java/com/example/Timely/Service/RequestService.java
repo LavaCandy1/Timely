@@ -56,25 +56,25 @@ public class RequestService {
             return;
         }
         System.out.println("Inside service for approval");
-        // extraClassReqRepo.findById(id).ifPresent(request -> {
-        //     request.setStatus("APPROVED");
-        //     request.setLocation(location);
-        //     extraClassReqRepo.save(request);
+        extraClassReqRepo.findById(id).ifPresent(request -> {
+            request.setStatus("APPROVED");
+            request.setLocation(location);
+            extraClassReqRepo.save(request);
 
 
-        //     ClassSlot newSlot = new ClassSlot();
-        //     newSlot.setCourseCode(request.getCourseCode());
-        //     newSlot.setDayOfWeek(request.getDayOfWeek());
-        //     newSlot.setStartTime(Time.valueOf(request.getStartTime() + ":00"));
-        //     newSlot.setLocation(location);
-        //     newSlot.setInstructor(request.getInstructor());
-        //     newSlot.setSlotType(ClassSlot.SlotType.valueOf(request.getSlotType().name())); // ughh... dunno if this will work or not
-        //     newSlot.setBatch(request.getBatch());
-        //     newSlot.setGroup(request.getGroup());
-        //     newSlot.setYear(request.getYear());
+            ClassSlot newSlot = new ClassSlot();
+            newSlot.setCourseCode(request.getCourseCode());
+            newSlot.setDayOfWeek(request.getDayOfWeek());
+            newSlot.setStartTime(Time.valueOf(request.getStartTime() + ":00"));
+            newSlot.setLocation(location);
+            newSlot.setInstructor(request.getInstructor());
+            newSlot.setSlotType(ClassSlot.SlotType.valueOf(request.getSlotType().name())); // ughh... dunno if this will work or not
+            newSlot.setBatch(request.getBatch());
+            newSlot.setGroup(request.getGroup());
+            newSlot.setYear(request.getYear());
             
-            // classSlotRepo.save(newSlot);
-        // });
+            classSlotRepo.save(newSlot);
+        });
 
         // String instructorEmail = extraClassReqRepo.findById(id).map(ExtraClassRequest::getInstructor).orElse(null);
         String dummyToEmail = "E22CSEU1201@bennett.edu.in"; // Replace with actual email retrieval logic
