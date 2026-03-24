@@ -4,8 +4,10 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.List;
 
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
+import com.example.Timely.Events.TimetableUpdateEvent;
 import com.example.Timely.Models.ClassSlot;
 import com.example.Timely.Models.Student;
 import com.example.Timely.Models.dto.timetableDTO.cancelClassDTO;
@@ -14,16 +16,15 @@ import com.example.Timely.Models.dto.timetableDTO.teachertimetableDTO;
 import com.example.Timely.Repository.ClassSlotRepo;
 import com.example.Timely.Repository.StudentRepo;
 
+import lombok.RequiredArgsConstructor;
+
 @Service
+@RequiredArgsConstructor
 public class TimetableService {
 
     private final ClassSlotRepo classSlotRepo;
     private final StudentRepo studentRepo;
-
-    TimetableService(ClassSlotRepo classSlotRepo, StudentRepo studentRepo) {
-        this.classSlotRepo = classSlotRepo;
-        this.studentRepo = studentRepo;
-    }
+    private final ApplicationEventPublisher eventPublisher;
 
     public List<ClassSlot> getTimeTableForStudent(String enrollmentNumber) throws Exception {
         Student stud = studentRepo.findByEnrollmentNumber(enrollmentNumber)
@@ -76,6 +77,8 @@ public class TimetableService {
             throw new IllegalArgumentException("ClassSlot cannot be null");
         }
         classSlotRepo.save(newClass);
+        
+        eventPublisher.publishEvent(new TimetableUpdateEvent(this, newClass, "ADDED"));
     }
 
     public void deleteClass(deleteClassDTO classToDelete) {

@@ -33,13 +33,17 @@ public class EmailService {
 
     @Async
     public void sendMassEmail(List<String> recipients, String subject, String body
-        // ,String instructor
+        ,String instructor
         ) {
         try {
             SimpleMailMessage message = new SimpleMailMessage();
             String[] to = recipients.toArray(new String[0]);
+            if (to.equals(null)) {
+                System.out.println("No recipients found for mass email.");
+                return;                
+            }
             message.setTo(to);
-            // message.setBcc(instructor); // BCC the instructor to keep them informed
+            message.setBcc(instructor); // BCC the instructor to keep them informed
             message.setSubject(subject);
             message.setText(body);
             

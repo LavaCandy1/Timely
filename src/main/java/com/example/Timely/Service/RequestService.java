@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.example.Timely.Models.ClassSlot;
 import com.example.Timely.Models.ExtraClassRequest;
 import com.example.Timely.Models.Locations;
-import com.example.Timely.Repository.ClassSlotRepo;
+// import com.example.Timely.Repository.ClassSlotRepo;
 import com.example.Timely.Repository.ExtraClassRequestRepo;
 import com.example.Timely.Repository.LocationRepo;
 
@@ -23,7 +23,7 @@ public class RequestService {
 
     private final ExtraClassRequestRepo extraClassReqRepo;
     private final LocationRepo locationRepo;
-    private final ClassSlotRepo classSlotRepo;
+    // private final ClassSlotRepo classSlotRepo;
     private final EmailService emailService;
     
 
@@ -76,7 +76,7 @@ public class RequestService {
             newSlot.setYear(request.getYear());
             
             // classSlotRepo.save(newSlot);
-            
+
             // 3. Send email notification to instructor
             // String instructorEmail = extraClassReqRepo.findById(id).map(ExtraClassRequest::getInstructor).orElse(null);
             String dummyToEmail = "E22CSEU1201@bennett.edu.in"; // Replace with actual email retrieval logic
