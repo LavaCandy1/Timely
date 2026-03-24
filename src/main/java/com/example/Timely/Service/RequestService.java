@@ -55,13 +55,15 @@ public class RequestService {
         if (id == null) {
             return;
         }
+
         System.out.println("Inside service for approval");
         extraClassReqRepo.findById(id).ifPresent(request -> {
+            // 1. Update request
             request.setStatus("APPROVED");
             request.setLocation(location);
             extraClassReqRepo.save(request);
 
-
+            // 2. Create new class slot in timetable
             ClassSlot newSlot = new ClassSlot();
             newSlot.setCourseCode(request.getCourseCode());
             newSlot.setDayOfWeek(request.getDayOfWeek());
@@ -73,15 +75,28 @@ public class RequestService {
             newSlot.setGroup(request.getGroup());
             newSlot.setYear(request.getYear());
             
-            classSlotRepo.save(newSlot);
+            // classSlotRepo.save(newSlot);
+            
+            // 3. Send email notification to instructor
+            // String instructorEmail = extraClassReqRepo.findById(id).map(ExtraClassRequest::getInstructor).orElse(null);
+            String dummyToEmail = "E22CSEU1201@bennett.edu.in"; // Replace with actual email retrieval logic
+            String emailBody = """
+                                Dear %s,
+                                
+                                Your request for an extra class for course %s has been approved. 
+                                The class will be held at %s starting at %s on %s.
+                                
+                                Best regards,
+                                Timely Team"""
+                                .formatted(
+                                    request.getInstructor(),
+                                    request.getCourseCode(), 
+                                    location, request.getStartTime(), 
+                                    request.getDayOfWeek()
+                                );
+
+            emailService.sendEmail(dummyToEmail, "Extra Class Request Approved", emailBody);
         });
-
-        // String instructorEmail = extraClassReqRepo.findById(id).map(ExtraClassRequest::getInstructor).orElse(null);
-        String dummyToEmail = "E22CSEU1201@bennett.edu.in"; // Replace with actual email retrieval logic
-        String emailSubject = "Your Extra Class Request has been Approved";
-        String emailBody = "Dear Instructor,\n\nYour request for an extra class has been approved. The class will be held at " + location + ".\n\nBest regards,\nTimely Team";
-
-        emailService.sendEmail(dummyToEmail, emailSubject, emailBody);
     }
 
     public List<Locations> getAvailableLocations(Long id) {
