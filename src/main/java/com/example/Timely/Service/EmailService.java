@@ -43,9 +43,13 @@ public class EmailService {
                 return;                
             }
             message.setTo(to);
-            message.setBcc(instructor); // BCC the instructor to keep them informed
             message.setSubject(subject);
             message.setText(body);
+
+            if (instructor != null && !instructor.trim().isEmpty()) {
+                message.setBcc(instructor);
+                System.out.println("BCCing instructor: " + instructor);
+            }
             
             mailSender.send(message);
             System.out.println("Mass email sent to: " + String.join(", ", to));
