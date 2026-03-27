@@ -7,6 +7,7 @@ import java.util.List;
 import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.stereotype.Service;
 
+import com.example.Timely.Events.ClassCancelEvent;
 import com.example.Timely.Events.TimetableUpdateEvent;
 import com.example.Timely.Models.ClassSlot;
 import com.example.Timely.Models.Student;
@@ -69,6 +70,8 @@ public class TimetableService {
         );
 
         System.out.println("Number of class slots updated: " + updatedCount);
+        eventPublisher.publishEvent(new ClassCancelEvent(this,batches, cancelledDate, courseCode,dayOfWeek,startTime));
+        System.out.println("event published");
  
     }
 
@@ -78,12 +81,16 @@ public class TimetableService {
         }
         classSlotRepo.save(newClass);
         
-        eventPublisher.publishEvent(new TimetableUpdateEvent(this, newClass, "ADDED"));
+        // eventPublisher.publishEvent(new TimetableUpdateEvent(this, newClass, "ADDED"));
     }
 
     public void deleteClass(deleteClassDTO classToDelete) {
 
         System.out.println(classToDelete);
+        List<String> batches = classToDelete.getBatches();
+        String courseCode = classToDelete.getCourseCode();
+        String dayOfWeek = classToDelete.getDayOfWeek();
+        Time time = classToDelete.getStartTime();
         
         int deletedCount = classSlotRepo.deleteClassSlots(
             classToDelete.getBatches(),
@@ -96,6 +103,7 @@ public class TimetableService {
         );
 
         System.out.println("Number of class slots deleted: " + deletedCount);
+        
     }
 
 }

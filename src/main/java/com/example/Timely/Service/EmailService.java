@@ -32,6 +32,11 @@ public class EmailService {
     }
 
     @Async
+    public void sendMassEmail(List<String> recipients, String subject, String body) {
+        sendMassEmail(recipients, subject, body, null);
+    }
+
+    @Async
     public void sendMassEmail(List<String> recipients, String subject, String body
         ,String instructor
         ) {
