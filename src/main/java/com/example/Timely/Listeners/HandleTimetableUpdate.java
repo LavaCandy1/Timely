@@ -88,8 +88,8 @@ public class HandleTimetableUpdate {
                 event.getDayOfWeek(), 
                 event.getTime().toString()
             );
-            emailService.sendMassEmail(studentEmails, subject, body);
-            // System.out.println("Prepared cancellation email for students: " + String.join(", ", studentEmails));
+            // emailService.sendMassEmail(studentEmails, subject, body);
+            System.out.println("Prepared cancellation email for students: " + String.join(", ", studentEmails));
         } else if (event.getStatus().equals("RESCHEDULED")) {
             String subject = "Class Reinstated: "+event.getCourseCode();
             String body = String.format("""
@@ -107,8 +107,8 @@ public class HandleTimetableUpdate {
                 event.getDayOfWeek(), 
                 event.getTime().toString()
             );
-            emailService.sendMassEmail(studentEmails, subject, body);
-            // System.out.println("Prepared rescheduling email for students: " + String.join(", ", studentEmails));
+            // emailService.sendMassEmail(studentEmails, subject, body);
+            System.out.println("Prepared rescheduling email for students: " + String.join(", ", studentEmails));
         }
         
         return;
