@@ -122,7 +122,6 @@ public class TimeTableController {
 
         // add clash checking later
         // check for empty of invalid / null entires (must)
-        
         timetable.addClass(newClass.toEntity());
         return ResponseEntity.ok().build();
 

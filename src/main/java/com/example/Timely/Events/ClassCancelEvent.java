@@ -1,7 +1,7 @@
 package com.example.Timely.Events;
 
 import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.context.ApplicationEvent;
@@ -15,9 +15,15 @@ public class ClassCancelEvent extends ApplicationEvent {
     private String status; // e.g., "CANCELLED", "RESCHEDULED"
     private String courseCode;
     private String dayOfWeek;
-    private Time time;
+    private LocalTime time;
 
-    public ClassCancelEvent(Object source, List<String> batches,Date cancelledDate, String courseCode, String dayOfWeek, Time time) {
+    public ClassCancelEvent(Object source,
+                            List<String> batches,
+                            Date cancelledDate, 
+                            String courseCode, 
+                            String dayOfWeek, 
+                            LocalTime time
+                        ) {
         super(source);
         this.batches = batches;
         this.status = (cancelledDate == null) ? "RESCHEDULED" : "CANCELLED";

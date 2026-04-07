@@ -2,6 +2,7 @@ package com.example.Timely.Service;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.Arrays;
 import java.util.List;
 
@@ -64,7 +65,7 @@ public class TimetableService {
         String courseCode = classToCancel.getCourseCode();
         String dayOfWeek = classToCancel.getDayOfWeek();
         String location = classToCancel.getLocation();
-        Time startTime = classToCancel.getStartTime();
+        LocalTime startTime = classToCancel.getStartTime();
 
         int updatedCount = classSlotRepo.updateCancellationDateForSlots(
             cancelledDate, batches, courseCode, dayOfWeek, startTime, location

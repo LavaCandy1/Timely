@@ -2,7 +2,7 @@ package com.example.Timely.Models.dto.timetableDTO;
 
 
 import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalTime;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -22,6 +22,6 @@ public class CancelClassDTO {
     String dayOfWeek;
     String location;
     String slotType;
-    Time startTime;
+    LocalTime startTime;
     
 }

@@ -49,8 +49,7 @@ public class AddClassDTO {
         slot.setSlotType(this.slotType);
         slot.setDayOfWeek(this.dayOfWeek);
         slot.setLocation(this.location);
-
-        
+        slot.setStartTime(this.startTime);
 
         return slot;
     }

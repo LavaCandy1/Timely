@@ -53,7 +53,7 @@ public interface ClassSlotRepo extends JpaRepository<ClassSlot, Long> {
         cs.location AS location,
         cs.slot_type AS slotType,
         :instructor AS instructor,
-        string_agg(cs.batch, ',' Order by CAST(SUBSTRING(cs.batch FROM 2) AS INTEGER)) AS batches,
+        string_agg(cs.batch, ',' Order by CAST(SUBSTRING(cs.batch FROM 2 FOR 2) AS INTEGER)) AS batches,
         cs.cancelled_date AS cancelledDate
     FROM class_slot cs
     WHERE cs.instructor = :instructor
