@@ -11,7 +11,7 @@ import java.sql.Time;
 import java.time.LocalTime;
 
 @Data
-public class addClassDTO {
+public class AddClassDTO {
 
     @NotBlank(message = "Course code is required")
     private String courseCode;
@@ -50,12 +50,7 @@ public class addClassDTO {
         slot.setDayOfWeek(this.dayOfWeek);
         slot.setLocation(this.location);
 
-        // Handle Time Conversion
-        if (this.startTime != null) {
-            slot.setStartTime(Time.valueOf(this.startTime));
-            // default to 1 hour duration
-            slot.setEndTime(Time.valueOf(this.startTime.plusHours(1))); 
-        }
+        
 
         return slot;
     }

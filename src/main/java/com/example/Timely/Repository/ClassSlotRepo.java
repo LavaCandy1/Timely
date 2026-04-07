@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.example.Timely.Models.ClassSlot;
 import com.example.Timely.Models.dto.timetableDTO.AdminTimetableDTO;
-import com.example.Timely.Models.dto.timetableDTO.teachertimetableDTO;
+import com.example.Timely.Models.dto.timetableDTO.TeacherTimetableDTO;
 
 @Repository
 public interface ClassSlotRepo extends JpaRepository<ClassSlot, Long> {
@@ -41,11 +41,12 @@ public interface ClassSlotRepo extends JpaRepository<ClassSlot, Long> {
     GROUP BY cs.start_time, cs.day_of_week, cs.course_code, cs.location, cs.slot_type, cs.cancelled_date
     ORDER BY cs.start_time, cs.day_of_week
     """, nativeQuery = true)
-    List<teachertimetableDTO> findTeacherTimetable(@Param("instructor") String instructor);
+    List<TeacherTimetableDTO> findTeacherTimetable(@Param("instructor") String instructor);
 
     @Query(value = """
     SELECT 
-        cs.course_code AS courseCode,
+        string_agg(CAST(cs.id AS TEXT), ',') AS ids,
+        cs.course_code AS courseCode,    
         cs.start_time AS startTime,
         cs.day_of_week AS dayOfWeek,
         cs.location AS location,

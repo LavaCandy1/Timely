@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.Timely.Models.ClassSlot;
 import com.example.Timely.Models.dto.timetableDTO.AdminTimetableDTO;
-import com.example.Timely.Models.dto.timetableDTO.addClassDTO;
-import com.example.Timely.Models.dto.timetableDTO.cancelClassDTO;
-import com.example.Timely.Models.dto.timetableDTO.deleteClassDTO;
-import com.example.Timely.Models.dto.timetableDTO.teachertimetableDTO;
+import com.example.Timely.Models.dto.timetableDTO.AddClassDTO;
+import com.example.Timely.Models.dto.timetableDTO.CancelClassDTO;
+import com.example.Timely.Models.dto.timetableDTO.DeleteClassDTO;
+import com.example.Timely.Models.dto.timetableDTO.TeacherTimetableDTO;
+import com.example.Timely.Models.dto.timetableDTO.UpdateClassDTO;
 import com.example.Timely.Repository.ClassSlotRepo;
 import com.example.Timely.Service.TimetableService;
 import com.example.Timely.Service.Parsers.TimetableSavingService;
@@ -59,7 +60,7 @@ public class TimeTableController {
     }
 
     @GetMapping("/teacher")
-    public ResponseEntity<List<teachertimetableDTO>> getTeacherTimetable() {
+    public ResponseEntity<List<TeacherTimetableDTO>> getTeacherTimetable() {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         String name = auth.getName();
 
@@ -67,12 +68,12 @@ public class TimeTableController {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
 
-        List<teachertimetableDTO> classSlots = timetable.getTeacherTimetable(name);
+        List<TeacherTimetableDTO> classSlots = timetable.getTeacherTimetable(name);
         return ResponseEntity.ok(classSlots);
     }
 
     @PostMapping("/cancelClass")
-    public ResponseEntity<Void> cancelClass(@RequestBody cancelClassDTO classToCancel){
+    public ResponseEntity<Void> cancelClass(@RequestBody CancelClassDTO classToCancel){
         
         timetable.cancelClass(classToCancel);
         return ResponseEntity.ok().build();
@@ -100,7 +101,7 @@ public class TimeTableController {
     @GetMapping("/admin/teacher/{teacher}")
     public ResponseEntity<List<AdminTimetableDTO>> getTeacherTimetableForAdmin(@PathVariable String teacher) {
         List<AdminTimetableDTO> adminTimetableDTOs = classSlotRepo.findTeacherTimetableForAdmin(teacher);
-        
+        adminTimetableDTOs.forEach(dto -> dto.setInstructor(teacher));
         return ResponseEntity.ok(adminTimetableDTOs);
     }
 
@@ -116,7 +117,7 @@ public class TimeTableController {
     }
 
     @PostMapping("/admin/addClass")
-    public ResponseEntity<Void> addClass(@RequestBody addClassDTO newClass){
+    public ResponseEntity<Void> addClass(@RequestBody AddClassDTO newClass){
 
         // add clash checking later
         // check for empty of invalid / null entires (must)
@@ -127,12 +128,21 @@ public class TimeTableController {
     }
 
     @PostMapping("/admin/deleteClass")
-    public ResponseEntity<Void> deleteClass(@RequestBody deleteClassDTO classToDelete){
+    public ResponseEntity<Void> deleteClass(@RequestBody DeleteClassDTO classToDelete){
 
-        timetable.deleteClass(classToDelete);
+        // timetable.deleteClass(classToDelete);
         return ResponseEntity.ok().build();
 
     }
 
+    @PostMapping("/admin/updateClass")
+    public ResponseEntity<Void> updateClass (@RequestBody UpdateClassDTO updateClass) {
+        // check for empty of invalid / null entires (must)
+        // add clash checking later
+        System.out.println(updateClass.getIds());
+
+        // timetable.updateClass(updatedClassIDs);
+        return ResponseEntity.ok().build();
+    }
 
 }

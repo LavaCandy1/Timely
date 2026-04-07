@@ -67,7 +67,7 @@ public class RequestService {
             ClassSlot newSlot = new ClassSlot();
             newSlot.setCourseCode(request.getCourseCode());
             newSlot.setDayOfWeek(request.getDayOfWeek());
-            newSlot.setStartTime(Time.valueOf(request.getStartTime() + ":00"));
+            newSlot.setStartTime(LocalTime.parse(request.getStartTime()));
             newSlot.setLocation(location);
             newSlot.setInstructor(request.getInstructor());
             newSlot.setSlotType(ClassSlot.SlotType.valueOf(request.getSlotType().name())); // ughh... dunno if this will work or not

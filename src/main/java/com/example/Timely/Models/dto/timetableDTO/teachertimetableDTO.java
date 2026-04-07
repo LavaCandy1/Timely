@@ -12,7 +12,7 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @ToString
-public class teachertimetableDTO {
+public class TeacherTimetableDTO {
 
     String courseCode;
     Time startTime;

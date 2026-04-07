@@ -14,7 +14,7 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @ToString
-public class cancelClassDTO {
+public class CancelClassDTO {
 
     List<String> batches;
     Date cancelledDate;

@@ -2,6 +2,7 @@ package com.example.Timely.Service;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.context.ApplicationEventPublisher;
@@ -11,9 +12,9 @@ import com.example.Timely.Events.ClassCancelEvent;
 import com.example.Timely.Events.TimetableUpdateEvent;
 import com.example.Timely.Models.ClassSlot;
 import com.example.Timely.Models.Student;
-import com.example.Timely.Models.dto.timetableDTO.cancelClassDTO;
-import com.example.Timely.Models.dto.timetableDTO.deleteClassDTO;
-import com.example.Timely.Models.dto.timetableDTO.teachertimetableDTO;
+import com.example.Timely.Models.dto.timetableDTO.CancelClassDTO;
+import com.example.Timely.Models.dto.timetableDTO.DeleteClassDTO;
+import com.example.Timely.Models.dto.timetableDTO.TeacherTimetableDTO;
 import com.example.Timely.Repository.ClassSlotRepo;
 import com.example.Timely.Repository.StudentRepo;
 
@@ -39,7 +40,7 @@ public class TimetableService {
         return classSlots;
     }
 
-    public List<teachertimetableDTO> getTeacherTimetable(String teacherName){
+    public List<TeacherTimetableDTO> getTeacherTimetable(String teacherName){
 
         return classSlotRepo.findTeacherTimetable(teacherName);
             // .stream()
@@ -56,7 +57,7 @@ public class TimetableService {
 
     }
 
-    public void cancelClass(cancelClassDTO classToCancel) {
+    public void cancelClass(CancelClassDTO classToCancel) {
         
         List<String> batches = classToCancel.getBatches();
         Date cancelledDate = classToCancel.getCancelledDate();
@@ -84,7 +85,7 @@ public class TimetableService {
         // eventPublisher.publishEvent(new TimetableUpdateEvent(this, newClass, "ADDED"));
     }
 
-    public void deleteClass(deleteClassDTO classToDelete) {
+    public void deleteClass(DeleteClassDTO classToDelete) {
 
         System.out.println(classToDelete);
         List<String> batches = classToDelete.getBatches();
@@ -104,6 +105,12 @@ public class TimetableService {
 
         System.out.println("Number of class slots deleted: " + deletedCount);
         
+    }
+
+    public void updateClass(String[] updatedClassIDs) {
+        
+        
+                           
     }
 
 }

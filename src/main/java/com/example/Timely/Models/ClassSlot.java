@@ -1,7 +1,7 @@
 package com.example.Timely.Models;
 
 import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalTime;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -25,8 +25,8 @@ public class ClassSlot {
         
         this.courseCode = courseCode2;
         this.dayOfWeek = dayOfWeek2;
-        this.startTime = Time.valueOf(startTime2 + ":00");
-        this.endTime = Time.valueOf(endTime2 + ":00");
+        this.startTime = LocalTime.parse(startTime2);
+        this.endTime = LocalTime.parse(endTime2);
         this.location = location2;
         this.instructor = instructor2;
         this.slotType = slotType2;
@@ -41,8 +41,8 @@ public class ClassSlot {
     Long id;
     String courseCode; // e.g., "CSE101"
     String dayOfWeek; // e.g., "Monday", "Tuesday"
-    Time startTime; // e.g., "10:00"
-    Time endTime;   // e.g., "11:00"
+    LocalTime startTime; // e.g., "10:00"
+    LocalTime endTime;   // e.g., "11:00"
     String location; // e.g., "Room 101"
     String instructor; // e.g., "Dr. Smith"
     @Enumerated(EnumType.STRING)

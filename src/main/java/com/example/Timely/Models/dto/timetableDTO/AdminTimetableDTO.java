@@ -1,7 +1,7 @@
 package com.example.Timely.Models.dto.timetableDTO;
 
 import java.sql.Date;
-import java.sql.Time;
+import java.time.LocalTime;
 
 import com.example.Timely.Models.ClassSlot;
 
@@ -18,8 +18,9 @@ import lombok.ToString;
 @ToString
 public class AdminTimetableDTO {
 
+    String ids;
     String courseCode;
-    Time startTime;
+    LocalTime startTime;
     String dayOfWeek;
     String location;
     String slotType;
@@ -38,8 +39,9 @@ public class AdminTimetableDTO {
         this.cancelledDate = classSlot.getCancelledDate();
     }
 
-    public AdminTimetableDTO(String courseCode, Time startTime, String dayOfWeek, String location, String slotType,
+    public AdminTimetableDTO(String ids, String courseCode, LocalTime startTime, String dayOfWeek, String location, String slotType,
             String batches, Date cancelledDate) {
+        this.ids = ids;
         this.courseCode = courseCode;
         this.startTime = startTime;
         this.dayOfWeek = dayOfWeek;

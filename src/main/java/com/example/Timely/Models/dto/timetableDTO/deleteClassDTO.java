@@ -9,7 +9,7 @@ import com.example.Timely.Models.ClassSlot.SlotType;
 import lombok.Data;
 
 @Data
-public class deleteClassDTO {
+public class DeleteClassDTO {
     String courseCode;
     Time startTime;
     String dayOfWeek;
