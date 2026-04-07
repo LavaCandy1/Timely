@@ -109,6 +109,10 @@ public class TimeTableController {
     @GetMapping("/admin/batch/{year}/{batch}")
     public ResponseEntity<List<AdminTimetableDTO>> getBatchTimetableForAdmin(@PathVariable String year, @PathVariable String batch) {
         batch = batch.toUpperCase();
+
+        // TODO: need to take care of year and then use findAllByYearAndBatchOrderByDayOfWeekAscStartTimeAsc
+        // currently IN DB year is saved as FOURTH as well as 4th ... need to use only one format and update the DB accordingly
+
         List<ClassSlot> classSlots = classSlotRepo.findAllByBatch(batch);
         List<AdminTimetableDTO> adminTimetableDTOs = classSlots.stream()
             .map(AdminTimetableDTO::new)
@@ -120,6 +124,7 @@ public class TimeTableController {
     @PostMapping("/admin/addClass")
     public ResponseEntity<Void> addClass(@RequestBody AddClassDTO newClass){
 
+        // TODO
         // add clash checking later
         // check for empty of invalid / null entires (must)
         timetable.addClass(newClass.toEntity());

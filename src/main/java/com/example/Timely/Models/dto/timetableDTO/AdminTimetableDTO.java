@@ -29,6 +29,7 @@ public class AdminTimetableDTO {
     Date cancelledDate;
 
     public AdminTimetableDTO(ClassSlot classSlot) {
+        this.ids = classSlot.getId().toString();
         this.courseCode = classSlot.getCourseCode();
         this.startTime = classSlot.getStartTime();
         this.dayOfWeek = classSlot.getDayOfWeek();
