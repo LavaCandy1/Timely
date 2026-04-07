@@ -24,6 +24,8 @@ public interface ClassSlotRepo extends JpaRepository<ClassSlot, Long> {
 
     List<ClassSlot> findAllByBatch(String batch);
 
+    List<ClassSlot> findAllByYearAndBatchOrderByDayOfWeekAscStartTimeAsc(String year, String batch);
+
     List<ClassSlot> findAllByInstructor(String teacher);
 
     Optional<List<ClassSlot>> findAllByBatchAndCourseCodeIn(String batch, List<String> courseCodes);
