@@ -17,6 +17,7 @@ import com.example.Timely.Models.dto.timetableDTO.DeleteClassDTO;
 import com.example.Timely.Models.dto.timetableDTO.TeacherTimetableDTO;
 import com.example.Timely.Models.dto.timetableDTO.UpdateClassDTO;
 import com.example.Timely.Repository.ClassSlotRepo;
+import com.example.Timely.Repository.Projections.AdminTimetableProjection;
 import com.example.Timely.Service.TimetableService;
 import com.example.Timely.Service.Parsers.TimetableSavingService;
 
@@ -99,9 +100,9 @@ public class TimeTableController {
     // admin controller
 
     @GetMapping("/admin/teacher/{teacher}")
-    public ResponseEntity<List<AdminTimetableDTO>> getTeacherTimetableForAdmin(@PathVariable String teacher) {
-        List<AdminTimetableDTO> adminTimetableDTOs = classSlotRepo.findTeacherTimetableForAdmin(teacher);
-        adminTimetableDTOs.forEach(dto -> dto.setInstructor(teacher));
+    public ResponseEntity<List<AdminTimetableProjection>> getTeacherTimetableForAdmin(@PathVariable String teacher) {
+        List<AdminTimetableProjection> adminTimetableDTOs = classSlotRepo.findTeacherTimetableForAdmin(teacher);
+        // adminTimetableDTOs.forEach(dto -> dto.setInstructor(teacher));
         return ResponseEntity.ok(adminTimetableDTOs);
     }
 

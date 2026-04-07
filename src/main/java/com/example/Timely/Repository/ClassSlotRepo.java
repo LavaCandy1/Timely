@@ -2,6 +2,7 @@ package com.example.Timely.Repository;
 
 import java.sql.Date;
 import java.sql.Time;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -13,8 +14,8 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.Timely.Models.ClassSlot;
-import com.example.Timely.Models.dto.timetableDTO.AdminTimetableDTO;
 import com.example.Timely.Models.dto.timetableDTO.TeacherTimetableDTO;
+import com.example.Timely.Repository.Projections.AdminTimetableProjection;
 
 @Repository
 public interface ClassSlotRepo extends JpaRepository<ClassSlot, Long> {
@@ -51,6 +52,7 @@ public interface ClassSlotRepo extends JpaRepository<ClassSlot, Long> {
         cs.day_of_week AS dayOfWeek,
         cs.location AS location,
         cs.slot_type AS slotType,
+        :instructor AS instructor,
         string_agg(cs.batch, ',' Order by CAST(SUBSTRING(cs.batch FROM 2) AS INTEGER)) AS batches,
         cs.cancelled_date AS cancelledDate
     FROM class_slot cs
@@ -58,7 +60,7 @@ public interface ClassSlotRepo extends JpaRepository<ClassSlot, Long> {
     GROUP BY cs.start_time, cs.day_of_week, cs.course_code, cs.location, cs.slot_type, cs.cancelled_date
     ORDER BY cs.start_time, cs.day_of_week
     """, nativeQuery = true)
-    List<AdminTimetableDTO> findTeacherTimetableForAdmin(@Param("instructor") String instructor);
+    List<AdminTimetableProjection> findTeacherTimetableForAdmin(@Param("instructor") String instructor);
 
     @Transactional
     @Modifying(clearAutomatically = true) 
@@ -73,7 +75,7 @@ public interface ClassSlotRepo extends JpaRepository<ClassSlot, Long> {
         @Param("batches") List<String> batches,
         @Param("courseCode") String courseCode,
         @Param("dayOfWeek") String dayOfWeek,
-        @Param("startTime") Time startTime,
+        @Param("startTime") LocalTime startTime,
         @Param("location") String location
     );
 
