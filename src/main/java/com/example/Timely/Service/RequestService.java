@@ -2,7 +2,6 @@ package com.example.Timely.Service;
 
 import java.util.List;
 import java.sql.Date;
-import java.sql.Time;
 import java.time.LocalTime;
 
 import org.springframework.stereotype.Service;
@@ -10,7 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.Timely.Models.ClassSlot;
 import com.example.Timely.Models.ExtraClassRequest;
 import com.example.Timely.Models.Locations;
-// import com.example.Timely.Repository.ClassSlotRepo;
+import com.example.Timely.Repository.ClassSlotRepo;
 import com.example.Timely.Repository.ExtraClassRequestRepo;
 import com.example.Timely.Repository.LocationRepo;
 
@@ -23,7 +22,7 @@ public class RequestService {
 
     private final ExtraClassRequestRepo extraClassReqRepo;
     private final LocationRepo locationRepo;
-    // private final ClassSlotRepo classSlotRepo;
+    private final ClassSlotRepo classSlotRepo;
     private final EmailService emailService;
     
 

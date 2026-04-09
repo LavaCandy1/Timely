@@ -108,10 +108,15 @@ public class TimetableService {
         
     }
 
-    public void updateClass(String[] updatedClassIDs) {
-        
-        
-                           
+    public int updateClass(List<String> updatedClassIDs, ClassSlot updatedClass) {
+
+        List<Long> ids = updatedClassIDs.stream().map(Long::valueOf).toList();
+
+        int updatedClasses = classSlotRepo.updateClassSlots(ids, updatedClass);
+        System.out.println("Number of class slots updated: " + updatedClasses);
+        // eventPublisher.publishEvent(new TimetableUpdateEvent(this, updatedClass, "UPDATED"));
+
+        return updatedClasses;
     }
 
 }

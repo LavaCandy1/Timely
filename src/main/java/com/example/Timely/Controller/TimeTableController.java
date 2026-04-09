@@ -141,15 +141,12 @@ public class TimeTableController {
     }
 
     @PostMapping("/admin/updateClass")
-    public ResponseEntity<Void> updateClass (@RequestBody UpdateClassDTO updateClass) {
+    public ResponseEntity<Integer> updateClass (@RequestBody UpdateClassDTO updateClass) {
         // TODO
         // check for empty of invalid / null entires (must)
-        // add clash checking later
-        
-        System.out.println(updateClass.getIds());
 
-        // timetable.updateClass(updatedClassIDs);
-        return ResponseEntity.ok().build();
+        int updatedClasses = timetable.updateClass(updateClass.getIds(), updateClass.getSlot());
+        return ResponseEntity.ok(updatedClasses);
     }
 
 }

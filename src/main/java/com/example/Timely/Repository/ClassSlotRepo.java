@@ -99,5 +99,18 @@ public interface ClassSlotRepo extends JpaRepository<ClassSlot, Long> {
         @Param("instructor") String instructor
     );
 
-
+    @Transactional
+    @Modifying(clearAutomatically = true)
+    @Query("UPDATE ClassSlot cs SET " +
+           "cs.courseCode = :#{#updatedClass.courseCode}, " +
+           "cs.startTime = :#{#updatedClass.startTime}, " +
+           "cs.dayOfWeek = :#{#updatedClass.dayOfWeek}, " +
+           "cs.location = :#{#updatedClass.location}, " +
+           "cs.slotType = :#{#updatedClass.slotType}, " +
+           "cs.instructor = :#{#updatedClass.instructor} " +
+           "WHERE cs.id IN :ids")
+    int updateClassSlots(
+        @Param("ids") List<Long> ids,
+        @Param("updatedClass") ClassSlot updatedClass
+    );
 }
