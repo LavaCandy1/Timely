@@ -75,7 +75,7 @@ public class RequestService {
             newSlot.setGroup(request.getGroup());
             newSlot.setYear(request.getYear());
             
-            // classSlotRepo.save(newSlot);
+            classSlotRepo.save(newSlot);
 
             // 3. Send email notification to instructor
             // String instructorEmail = extraClassReqRepo.findById(id).map(ExtraClassRequest::getInstructor).orElse(null);
@@ -95,7 +95,7 @@ public class RequestService {
                                     request.getDayOfWeek()
                                 );
 
-            emailService.sendEmail(dummyToEmail, "Extra Class Request Approved", emailBody);
+            // emailService.sendEmail(dummyToEmail, "Extra Class Request Approved", emailBody);
         });
     }
 
