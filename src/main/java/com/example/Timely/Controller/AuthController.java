@@ -16,8 +16,11 @@ import com.example.Timely.Models.dto.UserRequestDTO;
 import com.example.Timely.Models.dto.UserResponseDTO;
 import com.example.Timely.Service.UserService;
 
+import lombok.extern.slf4j.Slf4j;
+
 @RestController
 @RequestMapping("/auth")
+@Slf4j
 public class AuthController {
 
     @Autowired
@@ -25,6 +28,7 @@ public class AuthController {
 
     @GetMapping("/health")
     public String healthCheck() {
+        log.info("Health check endpoint accessed.");
         return "Timely is up and running!";
     }
 
