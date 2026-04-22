@@ -2,7 +2,7 @@
 
 Timely is a robust Spring Boot backend application designed to manage, parse, and serve university timetables. It provides role-based access for Students, Teachers, and Administrators, allowing for personalized schedule views, automated timetable parsing from HTML/CSV files, and dynamic class management.
 
-Live link - [timely.lavacandy.me](timely.lavacandy.me)
+Live link - [timely.lavacandy.me](https://timely.lavacandy.me)
 
 Frontend github - [Lavacandy/Timely-Frontend](https://github.com/LavaCandy1/Timely-Frontend)
 
