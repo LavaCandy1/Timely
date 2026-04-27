@@ -32,13 +32,13 @@ public class UserService {
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder(12);
 
     public UserResponseDTO createStudent(UserRequestDTO userRequestDTO) {
-        if (userRepo.existsByEmail(userRequestDTO.getEmail())) {
+        if (userRepo.existsByEmail(userRequestDTO.getEmail().toLowerCase())) {
             System.out.println("User with this email already exists");
             throw new IllegalArgumentException("Student with this email already exists");
         }
         User user = new User();
         user.setName(userRequestDTO.getName());
-        user.setEmail(userRequestDTO.getEmail());
+        user.setEmail(userRequestDTO.getEmail().toLowerCase());
         user.setPassword(passwordEncoder.encode((userRequestDTO.getPassword())));
         user.setRole(User.RoleEnum.STUDENT);
         User savedUser = userRepo.save(user);
@@ -48,13 +48,13 @@ public class UserService {
 
     public UserResponseDTO createTeacher(UserRequestDTO userRequestDTO) {
 
-        if (userRepo.existsByEmail(userRequestDTO.getEmail())) {
+        if (userRepo.existsByEmail(userRequestDTO.getEmail().toLowerCase())) {
             throw new IllegalArgumentException("Teacher with this email already exists");
         }
 
         User user = new User();
         user.setName(userRequestDTO.getName());
-        user.setEmail(userRequestDTO.getEmail());
+        user.setEmail(userRequestDTO.getEmail().toLowerCase());
         user.setPassword(passwordEncoder.encode((userRequestDTO.getPassword())));
         user.setRole(User.RoleEnum.TEACHER);
         User savedUser = userRepo.save(user);
@@ -63,12 +63,12 @@ public class UserService {
     }
 
     public UserResponseDTO createAdmin(UserRequestDTO userRequestDTO) {
-        if (userRepo.existsByEmail(userRequestDTO.getEmail())) {
+        if (userRepo.existsByEmail(userRequestDTO.getEmail().toLowerCase())) {
             throw new IllegalArgumentException("Admin with this email already exists");
         }
         User user = new User();
         user.setName(userRequestDTO.getName());
-        user.setEmail(userRequestDTO.getEmail());
+        user.setEmail(userRequestDTO.getEmail().toLowerCase());
         user.setPassword(passwordEncoder.encode((userRequestDTO.getPassword())));
         user.setRole(User.RoleEnum.ADMIN);
         User savedUser = userRepo.save(user);
@@ -81,6 +81,9 @@ public class UserService {
     }
 
     public UserResponseDTO getUserById(Long id) {
+        if (id == null) {
+            throw new IllegalArgumentException("User ID cannot be null");
+        }
         User foundUser = userRepo.findById(id).orElse(null);
         if (foundUser != null) {
             return new UserResponseDTO(foundUser);
@@ -101,7 +104,7 @@ public class UserService {
         if (existingUser.isPresent()) {
             User updatedUser = existingUser.get();
             updatedUser.setName(userRequestDTO.getName());
-            updatedUser.setEmail(userRequestDTO.getEmail());
+            updatedUser.setEmail(userRequestDTO.getEmail().toLowerCase());
             updatedUser.setPassword(userRequestDTO.getPassword());
             User updatedUser2 = userRepo.save(updatedUser);
             return new UserResponseDTO(updatedUser2);
@@ -112,15 +115,15 @@ public class UserService {
     public String verifyUser(UserRequestDTO userRequestDTO) throws BadCredentialsException, Exception {
         try {
             authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(userRequestDTO.getEmail(), userRequestDTO.getPassword()));
+                    new UsernamePasswordAuthenticationToken(userRequestDTO.getEmail().toLowerCase(), userRequestDTO.getPassword()));
 
             // Fetch user roles from DB
-            User user = userRepo.findByEmail(userRequestDTO.getEmail())
+            User user = userRepo.findByEmail(userRequestDTO.getEmail().toLowerCase())
                     .orElseThrow(() -> new Exception("User not found"));
 
             String roles = user.getRole().toString();
 
-            return jwtService.generateToken(user.getEmail(), roles);
+            return jwtService.generateToken(user.getEmail().toLowerCase(), roles);
 
         } catch (BadCredentialsException ex) {
 
